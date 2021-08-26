@@ -1,10 +1,4 @@
-package main
-
-import "fmt"
-
-func main() {
-	fmt.Println(Hello("André", ""))
-}
+package hello
 
 const spanish = "Spanish"
 const french = "French"
@@ -16,7 +10,6 @@ func Hello(name string, language string) string {
 	if name == "" {
 		name = "World"
 	}
-
 	return greetingPrefix(language) + name
 }
 
