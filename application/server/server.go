@@ -33,9 +33,10 @@ func NewPlayerServer(store PlayerStore) *PlayerServer {
 type PlayerStore interface {
 	GetPlayerScore(name string) int
 	RecordWin(name string)
-	GetLeague() []Player
+	GetLeague() League
 }
 
+/*
 type InMemoryPlayerStore struct {
 	store map[string]int
 }
@@ -52,13 +53,14 @@ func (i *InMemoryPlayerStore) RecordWin(name string) {
 	i.store[name]++
 }
 
-func (i *InMemoryPlayerStore) GetLeague() []Player {
-	var league []Player
+func (i *InMemoryPlayerStore) GetLeague() League {
+	var league League
 	for name, wins := range i.store {
 		league = append(league, Player{name, wins})
 	}
 	return league
 }
+*/
 
 const jsonContentType = "application/json"
 
