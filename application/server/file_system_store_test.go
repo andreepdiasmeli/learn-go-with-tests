@@ -31,7 +31,7 @@ func TestFileSystemStore(t *testing.T) {
 
 	t.Run("league from a reader", func(t *testing.T) {
 		database, cleanDatabase := createTempFile(t, `[
-			{"Name": "André", "Wins": 10},
+			{"Name": "André", "Wins": 100},
 			{"Name": "Dias", "Wins": 33}
 		]`)
 		defer cleanDatabase()
@@ -40,7 +40,7 @@ func TestFileSystemStore(t *testing.T) {
 
 		got := store.GetLeague()
 		want := []Player{
-			{"André", 10},
+			{"André", 100},
 			{"Dias", 33},
 		}
 		assertLeague(t, got, want)
@@ -96,6 +96,30 @@ func TestFileSystemStore(t *testing.T) {
 
 		assertScoreEquals(t, got, want)
 		assertNoError(t, err)
+	})
+
+	t.Run("league sorted", func(t *testing.T) {
+		database, cleanDatabase := createTempFile(t, `[
+			{"Name": "André", "Wins": 10},
+			{"Name": "Dias", "Wins": 55}
+		]`)
+		defer cleanDatabase()
+
+		store, err := NewFileSystemPlayerStore(database)
+
+		assertNoError(t, err)
+
+		got := store.GetLeague()
+
+		want := []Player{
+			{"Dias", 55},
+			{"André", 10},
+		}
+
+		assertLeague(t, got, want)
+
+		got = store.GetLeague()
+		assertLeague(t, got, want)
 	})
 }
 
