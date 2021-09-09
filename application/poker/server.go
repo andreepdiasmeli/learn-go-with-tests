@@ -30,38 +30,6 @@ func NewPlayerServer(store PlayerStore) *PlayerServer {
 	return p
 }
 
-type PlayerStore interface {
-	GetPlayerScore(name string) int
-	RecordWin(name string)
-	GetLeague() League
-}
-
-/*
-type InMemoryPlayerStore struct {
-	store map[string]int
-}
-
-func NewInMemoryPlayerStore() *InMemoryPlayerStore {
-	return &InMemoryPlayerStore{map[string]int{}}
-}
-
-func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
-	return i.store[name]
-}
-
-func (i *InMemoryPlayerStore) RecordWin(name string) {
-	i.store[name]++
-}
-
-func (i *InMemoryPlayerStore) GetLeague() League {
-	var league League
-	for name, wins := range i.store {
-		league = append(league, Player{name, wins})
-	}
-	return league
-}
-*/
-
 const jsonContentType = "application/json"
 
 func (p *PlayerServer) leagueHandler(w http.ResponseWriter, r *http.Request) {
@@ -93,3 +61,29 @@ func (p *PlayerServer) showScore(w http.ResponseWriter, player string) {
 	}
 	fmt.Fprint(w, score)
 }
+
+/*
+type InMemoryPlayerStore struct {
+	store map[string]int
+}
+
+func NewInMemoryPlayerStore() *InMemoryPlayerStore {
+	return &InMemoryPlayerStore{map[string]int{}}
+}
+
+func (i *InMemoryPlayerStore) GetPlayerScore(name string) int {
+	return i.store[name]
+}
+
+func (i *InMemoryPlayerStore) RecordWin(name string) {
+	i.store[name]++
+}
+
+func (i *InMemoryPlayerStore) GetLeague() League {
+	var league League
+	for name, wins := range i.store {
+		league = append(league, Player{name, wins})
+	}
+	return league
+}
+*/
